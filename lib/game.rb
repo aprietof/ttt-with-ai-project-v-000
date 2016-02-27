@@ -26,26 +26,56 @@ class Game
 
   # returns the correct player, X, for the third move
   def current_player
-    @player_1 if board.turn_count == 2 
+    board.turn_count % 2 == 0 ? player_1 : player_2
   end
 
   # returns true for a draw
+  # returns true for a won game
+  # returns false for an in-progress game
   def over?
-    @board.full?
+    won? || draw? 
   end
 
+  # returns false for a draw
+  # returns true for a win
   def won?
-    WIN_COMBINATIONS.detect do |win_array|
-      @board.cells[win_array[0]] == "X" && @board.cells[win_array[1]] == "X" && @board.cells[win_array[2]] == "X" or @board.cells[win_array[0]] == "O" && @board.cells[win_array[1]] == "O" && @board[win_array.cells[2]] == "O"
+    WIN_COMBINATIONS.any? do |win_array|
+     board.cells[win_array[0]] == board.cells[win_array[1]] && board.cells[win_array[0]] == board.cells[win_array[2]] 
     end
   end
- 
+
+  # returns true for a draw
+  # returns false for a won game
+  # returns false for an in-progress game
+  def draw?
+    !won? && board.full?
+  end
 
 
+  # returns X when X won
+  # returns O when O won
+  def winner
+    if won?
+      winning_array = WIN_COMBINATIONS.detect do |win_array|
+        board.cells[win_array[0]] == "X" && board.cells[win_array[1]] == "X" && board.cells[win_array[2]] == "X" or board.cells[win_array[0]] == "O" && board.cells[win_array[1]] == "O" && board.cells[win_array[2]] == "O"
+      end
+      # returns nil when no winner
+      winning_array.nil? ? nil : board.cells[winning_array[0]]
+    end
+  end
 
+  # makes valid moves
+  def turn
+    input = current_player.move(board)
 
-
-
+    # asks for input again after a failed validation
+    while !board.valid_move?(input)
+      puts "Please enter a valid move: "
+      input = current_player.move(board)
+    end
+    # changes to player 2 after the first turn
+    board.update(input, current_player)
+  end
 
 
 
