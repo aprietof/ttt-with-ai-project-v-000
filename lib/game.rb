@@ -1,3 +1,5 @@
+require_relative 'players/human.rb'
+
 class Game
   # provides access to the board
   # provides access to player_1
@@ -33,14 +35,15 @@ class Game
   # returns true for a won game
   # returns false for an in-progress game
   def over?
-    won? || draw? 
+    won? || board.full? || draw?
   end
 
+  
+  def won?
   # returns false for a draw
   # returns true for a win
-  def won?
     WIN_COMBINATIONS.any? do |win_array|
-     board.cells[win_array[0]] == board.cells[win_array[1]] && board.cells[win_array[0]] == board.cells[win_array[2]] 
+     board.cells[win_array[0]] == "X" && board.cells[win_array[1]] == "X" && board.cells[win_array[2]] == "X" or board.cells[win_array[0]] == "O" && board.cells[win_array[1]] == "O" && board.cells[win_array[2]] == "O"
     end
   end
 
@@ -51,10 +54,10 @@ class Game
     !won? && board.full?
   end
 
-
+  
+  def winner
   # returns X when X won
   # returns O when O won
-  def winner
     if won?
       winning_array = WIN_COMBINATIONS.detect do |win_array|
         board.cells[win_array[0]] == "X" && board.cells[win_array[1]] == "X" && board.cells[win_array[2]] == "X" or board.cells[win_array[0]] == "O" && board.cells[win_array[1]] == "O" && board.cells[win_array[2]] == "O"
@@ -77,18 +80,29 @@ class Game
     board.update(input, current_player)
   end
 
+  def play
+    # plays through an entire game
+    until over?
+      # asks for players input on a turn of the game
+      board.turn_count 
+      # checks if the game is over after every turn
+      # plays the first turn of the game
+      # plays the first few turns of the game
+      turn
+      current_player
+    end
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+    # checks if the game is won after every turn
+    if won?
+      # stops playing if someone has won
+      # congratulates the winner X
+      # congratulates the winner O
+      puts "Congratulations #{winner}!"
+    # checks if the game is draw after every turn
+    # stops playing in a draw
+    # prints "Cats Game!" on a draw
+    elsif draw?
+      puts "Cats Game!" 
+    end
+  end
 end
