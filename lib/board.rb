@@ -2,7 +2,7 @@ require 'pry'
 
 class Board
 
-  #has an attribute to store the cells of the board
+  # has an attribute to store the cells of the board
   attr_accessor :board, :cells
 
   
