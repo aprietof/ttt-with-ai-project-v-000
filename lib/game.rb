@@ -60,8 +60,8 @@ class Game
   # returns O when O won
     if won?
       winning_array = WIN_COMBINATIONS.detect do |win_array|
-        board.cells[win_array[0]] == "X" && board.cells[win_array[1]] == "X" && 
-        board.cells[win_array[2]] == "X" or board.cells[win_array[0]] == "O" && board.cells[win_array[1]] == "O" && board.cells[win_array[2]] == "O"
+        board.cells[win_array[0]] == "X" && board.cells[win_array[1]] == "X" && board.cells[win_array[2]] == "X" || 
+        board.cells[win_array[0]] == "O" && board.cells[win_array[1]] == "O" && board.cells[win_array[2]] == "O"
       end
       # returns nil when no winner
       winning_array.nil? ? nil : board.cells[winning_array[0]]
