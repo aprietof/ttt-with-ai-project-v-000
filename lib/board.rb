@@ -1,5 +1,3 @@
-require 'pry'
-
 class Board
 
   # has an attribute to store the cells of the board

@@ -1,5 +1,3 @@
-require_relative 'players/human.rb'
-
 class Game
   # provides access to the board
   # provides access to player_1
