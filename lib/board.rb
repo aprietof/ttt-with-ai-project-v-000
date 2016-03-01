@@ -49,7 +49,7 @@ class Board
 
   # returns true for user input between 1-9 that is not taken
   def valid_move?(position)
-    !taken?(position) if position.ord.between?(48, 57)
+    !taken?(position) && position.ord.between?(48, 57)
   end
 
   # updates the cells in the board with the player token according to the input
