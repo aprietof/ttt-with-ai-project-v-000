@@ -1,9 +1,8 @@
 class Board
 
   # has an attribute to store the cells of the board
-  attr_accessor :board, :cells
+  attr_accessor :cells
 
-  
   # sets the cells of the board to a 9 element array of " "
   def initialize
     @cells = Array.new(9, " ")
